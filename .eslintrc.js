@@ -34,7 +34,6 @@ module.exports = {
     },
   },
   rules: {
-    indent: ['error', 2],
     'no-void': [
       'error',
       {

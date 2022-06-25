@@ -22,7 +22,7 @@ interface ICharacterEntry extends IBaseEntry {
   episode: string[];
 }
 
-interface ILocationEntry {
+interface ILocationEntry extends IBaseEntry {
   type: string;
   dimension: string;
   residents: string[];
@@ -34,7 +34,7 @@ interface IEpisodeEntry extends IBaseEntry {
   characters: string[];
 }
 
-type IEntry = ICharacterEntry | ILocationEntry | IEpisodeEntry;
+export type TEntry = ICharacterEntry | ILocationEntry | IEpisodeEntry;
 
 export interface IEntriesPageData {
   info: {
@@ -43,5 +43,5 @@ export interface IEntriesPageData {
     next: string | null;
     prev: string | null;
   };
-  results: IEntry[];
+  results: TEntry[];
 }

@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import { categories } from '../utils/categories';
+import { categories, CategoryName } from '../utils/categories';
 
 interface IProps {
-  onCategoryClick(name: string, url: string): void;
+  onCategoryClick(name: CategoryName, url: string): void;
 }
 
 export const MainPage: FC<IProps> = ({ onCategoryClick }) => (

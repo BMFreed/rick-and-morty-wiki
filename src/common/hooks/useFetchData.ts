@@ -3,27 +3,27 @@ import { useState } from 'react';
 const useFetchData = <Data>(
   responseValidator: (data: unknown) => boolean,
 ): {
-  pageData?: Data;
-  loadPageData(url: string): Promise<void>;
+  data?: Data;
+  loadData(url: string): Promise<void>;
   isLoading: boolean;
   fetchError?: string;
 } => {
-  const [pageData, setPageData] = useState<Data>();
+  const [data, setData] = useState<Data>();
   const [isLoading, setIsLoading] = useState(true);
   const [fetchError, setFetchError] = useState<string>();
 
-  const isResponseValid = (data: unknown): data is Data =>
-    responseValidator(data);
+  const isResponseValid = (parsedData: unknown): parsedData is Data =>
+    responseValidator(parsedData);
 
-  const loadPageData = async (url: string): Promise<void> => {
+  const loadData = async (url: string): Promise<void> => {
     setIsLoading(true);
     try {
       const apiResponse = await fetch(url);
 
-      const data = await apiResponse.json();
+      const parsedData = await apiResponse.json();
 
-      if (isResponseValid(data)) {
-        setPageData(data);
+      if (isResponseValid(parsedData)) {
+        setData(parsedData);
       } else {
         setFetchError('The server returned an invalid response.');
       }
@@ -33,7 +33,7 @@ const useFetchData = <Data>(
     setIsLoading(false);
   };
 
-  return { pageData, loadPageData, isLoading, fetchError };
+  return { data, loadData, isLoading, fetchError };
 };
 
 export default useFetchData;
