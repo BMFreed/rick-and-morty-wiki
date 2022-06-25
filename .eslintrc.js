@@ -35,6 +35,12 @@ module.exports = {
   },
   rules: {
     indent: ['error', 2],
+    'no-void': [
+      'error',
+      {
+        allowAsStatement: true,
+      },
+    ],
     'linebreak-style': ['error', 'unix'],
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
@@ -42,7 +48,7 @@ module.exports = {
     'no-console': 'error',
     'react/react-in-jsx-scope': 'off',
     'no-param-reassign': ['error'],
-    'prettier/prettier': 'error',
+    'prettier/prettier': 'warn',
     'import/extensions': [
       'error',
       'ignorePackages',
@@ -53,5 +59,19 @@ module.exports = {
         tsx: 'never',
       },
     ],
+    '@typescript-eslint/explicit-function-return-type': [
+      'error',
+      {
+        allowDirectConstAssertionInArrowFunctions: true,
+        allowExpressions: true,
+      },
+    ],
+    '@typescript-eslint/method-signature-style': ['error', 'method'],
   },
+  overrides: [
+    {
+      files: ['src/**/*.tsx'],
+      rules: { 'import/prefer-default-export': 'off' },
+    },
+  ],
 };
