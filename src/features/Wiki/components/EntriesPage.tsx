@@ -31,14 +31,14 @@ export const EntriesPage: FC<IProps> = ({
           <header>
             <button onClick={closePage}>Назад</button>
           </header>
-          <section>
+          <main>
             {entries.map((entry) => (
               <figure key={entry.id} onClick={() => setPopupData(entry)}>
                 {'image' in entry && <img src={entry.image} />}
                 <figcaption>{entry.name}</figcaption>
               </figure>
             ))}
-          </section>
+          </main>
           {popupData && (
             <DetailedEntryPopup
               category={category}

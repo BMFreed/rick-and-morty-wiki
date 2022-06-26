@@ -66,6 +66,7 @@ module.exports = {
       },
     ],
     '@typescript-eslint/method-signature-style': ['error', 'method'],
+    '@typescript-eslint/no-use-before-define': 'off',
   },
   overrides: [
     {

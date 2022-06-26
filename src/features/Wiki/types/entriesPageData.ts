@@ -5,7 +5,7 @@ interface IBaseEntry {
   created: Date;
 }
 
-interface ICharacterEntry extends IBaseEntry {
+export interface ICharacterEntry extends IBaseEntry {
   status: string;
   species: string;
   type: string;
@@ -22,13 +22,13 @@ interface ICharacterEntry extends IBaseEntry {
   episode: string[];
 }
 
-interface ILocationEntry extends IBaseEntry {
+export interface ILocationEntry extends IBaseEntry {
   type: string;
   dimension: string;
   residents: string[];
 }
 
-interface IEpisodeEntry extends IBaseEntry {
+export interface IEpisodeEntry extends IBaseEntry {
   air_date: string;
   episode: string;
   characters: string[];

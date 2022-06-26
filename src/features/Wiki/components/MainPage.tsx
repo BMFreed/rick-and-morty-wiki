@@ -8,13 +8,13 @@ interface IProps {
 export const MainPage: FC<IProps> = ({ onCategoryClick }) => (
   <section>
     <h1>Choose category:</h1>
-    <section>
+    <main>
       {categories.map(({ name, url, image }) => (
         <figure key={name} onClick={() => onCategoryClick(name, url)}>
           <img src={image} />
           <figcaption>{name}</figcaption>
         </figure>
       ))}
-    </section>
+    </main>
   </section>
 );
