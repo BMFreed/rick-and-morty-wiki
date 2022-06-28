@@ -1,18 +1,19 @@
 import { FC } from 'react';
-import { categories, CategoryName } from '../utils/categories';
+import { ICategory } from '../utils/categories';
 
 interface IProps {
-  onCategoryClick(name: CategoryName, url: string): void;
+  categories: ICategory[];
+  onCategoryClick(name: ICategory): void;
 }
 
-export const MainPage: FC<IProps> = ({ onCategoryClick }) => (
+export const MainPage: FC<IProps> = ({ categories, onCategoryClick }) => (
   <section>
     <h1>Choose category:</h1>
     <main>
-      {categories.map(({ name, url, image }) => (
-        <figure key={name} onClick={() => onCategoryClick(name, url)}>
-          <img src={image} />
-          <figcaption>{name}</figcaption>
+      {categories.map((category) => (
+        <figure key={category.name} onClick={() => onCategoryClick(category)}>
+          <img src={category.image} />
+          <figcaption>{category.name}</figcaption>
         </figure>
       ))}
     </main>

@@ -9,7 +9,7 @@ import {
 } from '../types/entriesPageData';
 
 interface IProps {
-  category: CategoryName;
+  categoryName: CategoryName;
   data: TEntry;
   onClose: DispatchWithoutAction;
 }
@@ -95,8 +95,8 @@ const EpisodePopup: FC<{ data: IEpisodeEntry }> = ({ data }) => {
   );
 };
 
-export const DetailedEntryPopup: FC<IProps> = ({ category, data }) => {
-  switch (category) {
+export const DetailedEntryPopup: FC<IProps> = ({ categoryName, data }) => {
+  switch (categoryName) {
     case CategoryName.CHARACTERS:
       return <CharacterPopup data={data as ICharacterEntry} />;
     case CategoryName.LOCATIONS:
