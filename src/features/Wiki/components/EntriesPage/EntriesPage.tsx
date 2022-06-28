@@ -35,29 +35,24 @@ export const EntriesPage: FC<IProps> = ({
 
   return (
     <>
-      {showOverlay ? (
-        <div>{fetchError || 'Loading...'}</div>
-      ) : (
-        <>
-          <header>
-            <button onClick={closePage}>Назад</button>
-          </header>
-          <main>
-            {entries.map((entry) => (
-              <figure key={entry.id} onClick={() => setPopupData(entry)}>
-                {'image' in entry && <img src={entry.image} />}
-                <figcaption>{entry.name}</figcaption>
-              </figure>
-            ))}
-          </main>
-          {popupData && (
-            <DetailedEntryPopup
-              categoryName={category.name}
-              data={popupData}
-              onClose={() => setPopupData(undefined)}
-            />
-          )}
-        </>
+      {showOverlay && <div>{fetchError || 'Loading...'}</div>}
+      <header>
+        <button onClick={closePage}>Назад</button>
+      </header>
+      <main>
+        {entries.map((entry) => (
+          <figure key={entry.id} onClick={() => setPopupData(entry)}>
+            {'image' in entry && <img src={entry.image} />}
+            <figcaption>{entry.name}</figcaption>
+          </figure>
+        ))}
+      </main>
+      {popupData && (
+        <DetailedEntryPopup
+          categoryName={category.name}
+          data={popupData}
+          onClose={() => setPopupData(undefined)}
+        />
       )}
       <section>
         {isFirstSetOfPages && (
