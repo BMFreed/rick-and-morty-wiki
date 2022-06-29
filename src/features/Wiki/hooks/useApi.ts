@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { head } from 'lodash';
 import useFetchData from '../../../common/hooks/useFetchData';
 import { IEntriesPageData } from '../types/entriesPageData';
 import validateEntriesPageData from '../utils/validateEntriesPageData';
@@ -8,7 +7,7 @@ const useApi = (): {
   entriesPageData?: IEntriesPageData;
   isLoading: boolean;
   fetchError?: string;
-  onPageChange(url: string, pageNumber: number): void;
+  onPageChange(pageNumber: number): void;
   onApplyFilters(filters: Record<string, string>): void;
   loadCategoryEntries(url: string): void;
 } => {
@@ -26,29 +25,36 @@ const useApi = (): {
     }
   }, [queryUrl]);
 
-  const onPageChange = (url: string, pageNumber: number): void =>
-    setQueryUrl(`${url}/?page=${pageNumber}`);
-  // TODO здесь баг, фильтры сбрасываются
+  const onPageChange = (pageNumber: number): void => {
+    if (!queryUrl) {
+      return;
+    }
+
+    const url = new URL(queryUrl);
+    url.searchParams.delete('page');
+    url.searchParams.append('page', String(pageNumber));
+
+    setQueryUrl(url.toString());
+  };
 
   const onApplyFilters = (filters: Record<string, string>): void => {
     if (!queryUrl) {
       return;
     }
 
-    let filterQuery = '';
+    const url = new URL(queryUrl);
 
     Object.entries(filters).forEach(([filterName, filterCondition]) => {
+      url.searchParams.delete(filterName);
       if (filterCondition) {
-        filterQuery += `&${filterName}=${filterCondition}`;
+        url.searchParams.append(filterName, filterCondition);
       }
     });
 
-    setQueryUrl(head(queryUrl.split('&')) + filterQuery);
-    // TODO использовать URL API
+    setQueryUrl(url.toString());
   };
 
-  const loadCategoryEntries = (url: string): void =>
-    setQueryUrl(`${url}/?page=1`);
+  const loadCategoryEntries = (url: string): void => setQueryUrl(url);
 
   return {
     entriesPageData,

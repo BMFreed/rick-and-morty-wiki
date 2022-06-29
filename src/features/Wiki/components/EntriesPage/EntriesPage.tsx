@@ -9,7 +9,7 @@ interface IProps {
   data?: IEntriesPageData;
   isLoading: boolean;
   fetchError?: string;
-  onPageChange(url: string, pageNumber: number): void;
+  onPageChange(pageNumber: number): void;
   closePage: DispatchWithoutAction;
   onApplyFilters(filters: Record<string, string>): void;
 }
@@ -124,10 +124,7 @@ export const EntriesPage: FC<IProps> = ({
           <button onClick={goToPreviousSetOfPages}>...</button>
         )}
         {currentSetOfPages.map((pageNumber) => (
-          <button
-            key={pageNumber}
-            onClick={() => onPageChange(category.url, pageNumber)}
-          >
+          <button key={pageNumber} onClick={() => onPageChange(pageNumber)}>
             {pageNumber}
           </button>
         ))}
