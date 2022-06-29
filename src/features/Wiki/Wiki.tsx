@@ -1,5 +1,6 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
+import { head } from 'lodash';
 import { MainPage } from './components/MainPage';
 import useFetchData from '../../common/hooks/useFetchData';
 import validateEntriesPageData from './utils/validateEntriesPageData';
@@ -9,6 +10,7 @@ import { categories, ICategory } from './utils/categories';
 
 export const Wiki: FC = () => {
   const [category, setCategory] = useState<ICategory>();
+  const [queryUrl, setQueryUrl] = useState<string>();
   const {
     data: entriesPageData,
     loadData: loadEntriesPageData,
@@ -16,23 +18,46 @@ export const Wiki: FC = () => {
     fetchError,
   } = useFetchData<IEntriesPageData>(validateEntriesPageData);
 
-  return category && entriesPageData ? (
+  useEffect(() => {
+    if (queryUrl) {
+      void loadEntriesPageData(queryUrl);
+    }
+  }, [queryUrl]);
+
+  const onApplyFilters = (filters: Record<string, string>): void => {
+    if (!queryUrl) {
+      return;
+    }
+
+    let filterQuery = '';
+
+    Object.entries(filters).forEach(([filterName, filterCondition]) => {
+      if (filterCondition) {
+        filterQuery += `&${filterName}=${filterCondition}`;
+      }
+    });
+
+    setQueryUrl(head(queryUrl.split('&')) + filterQuery);
+  };
+
+  return category ? (
     <EntriesPage
       category={category}
       data={entriesPageData}
       isLoading={isLoading}
       fetchError={fetchError}
       onPageChange={(url, pageNumber) =>
-        loadEntriesPageData(`${url}/?page=${pageNumber}`)
+        setQueryUrl(`${url}/?page=${pageNumber}`)
       }
       closePage={() => setCategory(undefined)}
+      onApplyFilters={onApplyFilters}
     />
   ) : (
     <MainPage
       categories={categories}
       onCategoryClick={(clickedCategory) => {
         setCategory(clickedCategory);
-        void loadEntriesPageData(clickedCategory.url);
+        setQueryUrl(`${clickedCategory.url}/?page=1`);
       }}
     />
   );

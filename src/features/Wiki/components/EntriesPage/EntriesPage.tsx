@@ -6,11 +6,12 @@ import usePagination from './hooks/usePagination';
 
 interface IProps {
   category: ICategory;
-  data: IEntriesPageData;
+  data?: IEntriesPageData;
   isLoading: boolean;
   fetchError?: string;
-  onPageChange(url: string, pageNumber: number): Promise<void>;
+  onPageChange(url: string, pageNumber: number): void;
   closePage: DispatchWithoutAction;
+  onApplyFilters(filters: Record<string, string>): void;
 }
 
 export const EntriesPage: FC<IProps> = ({
@@ -20,8 +21,23 @@ export const EntriesPage: FC<IProps> = ({
   fetchError,
   onPageChange,
   closePage,
+  onApplyFilters,
 }) => {
+  if (!data) {
+    return <div>{fetchError || 'Oops! Something went wrong...'}</div>;
+  }
+
   const [popupData, setPopupData] = useState<TEntry>();
+  const [activeFilters, setActiveFilters] = useState<Record<string, string>>(
+    {},
+  );
+
+  const onFiltersChange = (filterName: string, newValue: string): void =>
+    setActiveFilters((prevState) => ({
+      ...prevState,
+      [filterName]: newValue,
+    }));
+
   const showOverlay = isLoading || fetchError;
   const { info: pageInfo, results: entries } = data;
 
@@ -39,13 +55,61 @@ export const EntriesPage: FC<IProps> = ({
       <header>
         <button onClick={closePage}>Назад</button>
       </header>
+      <aside>
+        {category.filters.map((filter) =>
+          'conditions' in filter ? (
+            <article key={filter.name}>
+              <label htmlFor={`filter-${filter.name}`}>{filter.name}</label>{' '}
+              <select
+                name={`filter-${filter.name}`}
+                id={filter.name}
+                onChange={(event) => {
+                  const currentValue = event.target.value;
+
+                  const condition = currentValue === 'all' ? '' : currentValue;
+
+                  onFiltersChange(filter.name, condition);
+                }}
+              >
+                <option>all</option>
+                {filter.conditions.map((condition) => (
+                  <option key={condition} value={condition}>
+                    {condition}
+                  </option>
+                ))}
+              </select>
+            </article>
+          ) : (
+            <article key={filter.name}>
+              <label htmlFor={`filter-${filter.name}`}>{filter.name}</label>{' '}
+              <input
+                type='text'
+                id={`filter-${filter.name}`}
+                onChange={(event) =>
+                  onFiltersChange(
+                    filter.name,
+                    event.target.value.trim().toLowerCase(),
+                  )
+                }
+              />
+            </article>
+          ),
+        )}
+        <button onClick={() => onApplyFilters(activeFilters)}>
+          Apply filters
+        </button>
+      </aside>
       <main>
-        {entries.map((entry) => (
-          <figure key={entry.id} onClick={() => setPopupData(entry)}>
-            {'image' in entry && <img src={entry.image} />}
-            <figcaption>{entry.name}</figcaption>
-          </figure>
-        ))}
+        <ul>
+          {entries.map((entry) => (
+            <li key={entry.id}>
+              <figure onClick={() => setPopupData(entry)}>
+                {'image' in entry && <img src={entry.image} />}
+                <figcaption>{entry.name}</figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
       </main>
       {popupData && (
         <DetailedEntryPopup
