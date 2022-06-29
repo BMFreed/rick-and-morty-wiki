@@ -1,44 +1,21 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 
-import { head } from 'lodash';
 import { MainPage } from './components/MainPage';
-import useFetchData from '../../common/hooks/useFetchData';
-import validateEntriesPageData from './utils/validateEntriesPageData';
 import { EntriesPage } from './components/EntriesPage/EntriesPage';
-import { IEntriesPageData } from './types/entriesPageData';
 import { categories, ICategory } from './utils/categories';
+import useApi from './hooks/useApi';
 
 export const Wiki: FC = () => {
   const [category, setCategory] = useState<ICategory>();
-  const [queryUrl, setQueryUrl] = useState<string>();
+
   const {
-    data: entriesPageData,
-    loadData: loadEntriesPageData,
+    entriesPageData,
     isLoading,
     fetchError,
-  } = useFetchData<IEntriesPageData>(validateEntriesPageData);
-
-  useEffect(() => {
-    if (queryUrl) {
-      void loadEntriesPageData(queryUrl);
-    }
-  }, [queryUrl]);
-
-  const onApplyFilters = (filters: Record<string, string>): void => {
-    if (!queryUrl) {
-      return;
-    }
-
-    let filterQuery = '';
-
-    Object.entries(filters).forEach(([filterName, filterCondition]) => {
-      if (filterCondition) {
-        filterQuery += `&${filterName}=${filterCondition}`;
-      }
-    });
-
-    setQueryUrl(head(queryUrl.split('&')) + filterQuery);
-  };
+    onPageChange,
+    onApplyFilters,
+    loadCategoryEntries,
+  } = useApi();
 
   return category ? (
     <EntriesPage
@@ -46,9 +23,7 @@ export const Wiki: FC = () => {
       data={entriesPageData}
       isLoading={isLoading}
       fetchError={fetchError}
-      onPageChange={(url, pageNumber) =>
-        setQueryUrl(`${url}/?page=${pageNumber}`)
-      }
+      onPageChange={onPageChange}
       closePage={() => setCategory(undefined)}
       onApplyFilters={onApplyFilters}
     />
@@ -57,7 +32,7 @@ export const Wiki: FC = () => {
       categories={categories}
       onCategoryClick={(clickedCategory) => {
         setCategory(clickedCategory);
-        setQueryUrl(`${clickedCategory.url}/?page=1`);
+        loadCategoryEntries(clickedCategory.url);
       }}
     />
   );

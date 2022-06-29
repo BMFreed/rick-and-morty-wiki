@@ -25,6 +25,7 @@ export const EntriesPage: FC<IProps> = ({
 }) => {
   if (!data) {
     return <div>{fetchError || 'Oops! Something went wrong...'}</div>;
+    // TODO перенести это в родительский компонент
   }
 
   const [popupData, setPopupData] = useState<TEntry>();
