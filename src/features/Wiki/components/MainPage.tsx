@@ -1,4 +1,5 @@
 import { FC } from 'react';
+
 import { ICategory } from '../utils/categories';
 
 interface IProps {

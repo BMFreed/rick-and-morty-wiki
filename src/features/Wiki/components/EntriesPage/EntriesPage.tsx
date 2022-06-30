@@ -1,4 +1,5 @@
 import { DispatchWithoutAction, FC, useState } from 'react';
+
 import { IEntriesPageData, TEntry } from '../../types/entriesPageData';
 import { ICategory } from '../../utils/categories';
 import { DetailedEntryPopup } from '../DetailedEntryPopup';

@@ -67,6 +67,22 @@ module.exports = {
     ],
     '@typescript-eslint/method-signature-style': ['error', 'method'],
     '@typescript-eslint/no-use-before-define': 'off',
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        devDependencies: true,
+      },
+    ],
+    'import/order': [
+      'error',
+      {
+        groups: [
+          ['external', 'builtin'],
+          ['index', 'sibling', 'internal', 'parent'],
+        ],
+        'newlines-between': 'always',
+      },
+    ],
   },
   overrides: [
     {

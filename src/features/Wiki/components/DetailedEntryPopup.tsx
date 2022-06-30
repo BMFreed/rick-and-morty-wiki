@@ -1,5 +1,6 @@
 import { DispatchWithoutAction, FC } from 'react';
 import styled from 'styled-components';
+
 import { CategoryName } from '../utils/categories';
 import {
   ICharacterEntry,

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import useFetchData from '../../../common/hooks/useFetchData';
 import { IEntriesPageData } from '../types/entriesPageData';
 import validateEntriesPageData from '../utils/validateEntriesPageData';

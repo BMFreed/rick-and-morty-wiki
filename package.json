@@ -28,6 +28,7 @@
   "scripts": {
     "start": "react-scripts start",
     "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
+    "codestyle-fix": "eslint \"./**/*.{ts,tsx,mdx,js}\" --fix",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
