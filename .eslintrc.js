@@ -47,6 +47,13 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'no-param-reassign': ['error'],
     'prettier/prettier': 'warn',
+    '@typescript-eslint/explicit-function-return-type': [
+      'error',
+      {
+        allowDirectConstAssertionInArrowFunctions: true,
+        allowExpressions: true,
+      },
+    ],
     'import/extensions': [
       'error',
       'ignorePackages',
@@ -57,15 +64,9 @@ module.exports = {
         tsx: 'never',
       },
     ],
-    '@typescript-eslint/explicit-function-return-type': [
-      'error',
-      {
-        allowDirectConstAssertionInArrowFunctions: true,
-        allowExpressions: true,
-      },
-    ],
     '@typescript-eslint/method-signature-style': ['error', 'method'],
     '@typescript-eslint/no-use-before-define': 'off',
+    'import/prefer-default-export': 'off',
     'import/no-extraneous-dependencies': [
       'error',
       {
@@ -85,10 +86,4 @@ module.exports = {
     'newline-after-var': ['error', 'always'],
     'newline-before-return': 'error',
   },
-  overrides: [
-    {
-      files: ['src/**/*.tsx'],
-      rules: { 'import/prefer-default-export': 'off' },
-    },
-  ],
 };
