@@ -16,7 +16,7 @@ interface IFilterWithPresetConditions extends IBaseFilter {
   conditions: string[];
 }
 
-type TFilter = IFilterWithPresetConditions | IBaseFilter;
+export type TFilter = IFilterWithPresetConditions | IBaseFilter;
 
 export interface ICategory {
   name: CategoryName;

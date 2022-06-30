@@ -32,6 +32,7 @@ const useApi = (): {
     }
 
     const url = new URL(queryUrl);
+
     url.searchParams.delete('page');
     url.searchParams.append('page', String(pageNumber));
 

@@ -43,7 +43,6 @@ module.exports = {
     'linebreak-style': ['error', 'unix'],
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
-    'newline-before-return': 'error',
     'no-console': 'error',
     'react/react-in-jsx-scope': 'off',
     'no-param-reassign': ['error'],
@@ -83,6 +82,8 @@ module.exports = {
         'newlines-between': 'always',
       },
     ],
+    'newline-after-var': ['error', 'always'],
+    'newline-before-return': 'error',
   },
   overrides: [
     {

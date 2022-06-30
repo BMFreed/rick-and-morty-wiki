@@ -3,12 +3,12 @@ import { range } from 'lodash';
 
 interface IProps {
   numberOfPages: number;
-  pageStep: number;
+  pagesPerView: number;
 }
 
 const usePagination = ({
   numberOfPages,
-  pageStep,
+  pagesPerView,
 }: IProps): {
   isFirstSetOfPages: boolean;
   isLastSetOfPages: boolean;
@@ -17,18 +17,18 @@ const usePagination = ({
   currentSetOfPages: number[];
 } => {
   const [firstPageInRange, setFirstPageInRange] = useState(1);
-  const lastPageInRange =
-    firstPageInRange + (pageStep - 1) < numberOfPages
-      ? firstPageInRange + (pageStep - 1)
-      : numberOfPages;
 
-  const isFirstSetOfPages = firstPageInRange > pageStep;
+  const assumedLastPage = firstPageInRange + (pagesPerView - 1);
+  const lastPageInRange =
+    assumedLastPage < numberOfPages ? assumedLastPage : numberOfPages;
+
+  const isFirstSetOfPages = firstPageInRange > pagesPerView;
   const isLastSetOfPages = lastPageInRange < numberOfPages;
 
   const goToPreviousSetOfPages = (): void =>
-    setFirstPageInRange(firstPageInRange - pageStep);
+    setFirstPageInRange(firstPageInRange - pagesPerView);
   const goToNextSetOfPages = (): void =>
-    setFirstPageInRange(firstPageInRange + pageStep);
+    setFirstPageInRange(firstPageInRange + pagesPerView);
 
   const currentSetOfPages = range(firstPageInRange, lastPageInRange + 1);
 
