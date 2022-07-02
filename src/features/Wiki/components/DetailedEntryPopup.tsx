@@ -1,13 +1,12 @@
 import { DispatchWithoutAction, FC } from 'react';
 import styled from 'styled-components';
-
-import { CategoryName } from '../utils/categories';
+import { CategoryName } from '@Wiki/utils/categories';
 import {
   ICharacterEntry,
   IEpisodeEntry,
   ILocationEntry,
   TEntry,
-} from '../types/entriesPageData';
+} from '@Wiki/types/entriesPageData';
 
 interface IProps {
   categoryName: CategoryName;

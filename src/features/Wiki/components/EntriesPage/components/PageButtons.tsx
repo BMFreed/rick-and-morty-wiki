@@ -1,6 +1,5 @@
 import { FC } from 'react';
-
-import usePagination from '../hooks/usePagination';
+import { usePagination } from '@Wiki/components/EntriesPage/hooks/usePagination';
 
 interface IProps {
   numberOfPages: number;

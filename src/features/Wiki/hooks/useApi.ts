@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
+import { useFetchData } from '@common/hooks/useFetchData';
+import { IEntriesPageData } from '@Wiki/types/entriesPageData';
+import { validateEntriesPageData } from '@Wiki/utils/validateEntriesPageData';
 
-import useFetchData from '../../../common/hooks/useFetchData';
-import { IEntriesPageData } from '../types/entriesPageData';
-import validateEntriesPageData from '../utils/validateEntriesPageData';
-
-const useApi = (): {
+export const useApi = (): {
   entriesPageData?: IEntriesPageData;
   isLoading: boolean;
   fetchError?: string;
@@ -67,5 +66,3 @@ const useApi = (): {
     loadCategoryEntries,
   };
 };
-
-export default useApi;

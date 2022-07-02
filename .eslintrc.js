@@ -17,7 +17,7 @@ module.exports = {
       jsx: true, // Allows for the parsing of JSX
     },
   },
-  plugins: ['@typescript-eslint', 'prettier'],
+  plugins: ['@typescript-eslint', 'prettier', 'no-relative-import-paths'],
   settings: {
     react: {
       version: 'detect', // Tells eslint-plugin-react to automatically detect the version of React to use
@@ -66,6 +66,10 @@ module.exports = {
       {
         devDependencies: true,
       },
+    ],
+    'no-relative-import-paths/no-relative-import-paths': [
+      'warn',
+      { allowSameFolder: false },
     ],
     'import/order': [
       'error',

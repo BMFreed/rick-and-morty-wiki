@@ -1,4 +1,4 @@
-const DefaultTheme = {
+export const defaultTheme = {
   colors: {
     background: '#252525',
     text: '#ffffff',
@@ -9,5 +9,3 @@ const DefaultTheme = {
     text: 'font-family: sans-serif;',
   },
 };
-
-export default DefaultTheme;

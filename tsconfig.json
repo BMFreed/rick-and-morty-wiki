@@ -6,7 +6,13 @@
     "moduleResolution": "node",
     "outDir": "dist",
     "target": "ESNext",
-    "sourceMap": true
+    "sourceMap": true,
+    "baseUrl": "src",
+    "paths": {
+      "@*": ["./*"],
+      "@Wiki/*": ["features/Wiki/*"],
+      "@common/*": ["common/*"]
+    }
   },
-  "include": ["src"]
+  "include": ["src", ".eslintrc.js", "configs"]
 }

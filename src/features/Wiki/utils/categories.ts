@@ -1,6 +1,6 @@
-import charactersThumbnail from '../images/characters.jpg';
-import locationsThumbnail from '../images/locations.jpg';
-import episodesThumbnail from '../images/episodes.jpg';
+import charactersThumbnail from '@Wiki/images/characters.jpg';
+import locationsThumbnail from '@Wiki/images/locations.jpg';
+import episodesThumbnail from '@Wiki/images/episodes.jpg';
 
 export enum CategoryName {
   CHARACTERS = 'characters',

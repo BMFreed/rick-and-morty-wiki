@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const useFetchData = <Data>(
+export const useFetchData = <Data>(
   responseValidator: (data: unknown) => boolean,
 ): {
   data?: Data;
@@ -40,5 +40,3 @@ const useFetchData = <Data>(
     fetchError,
   };
 };
-
-export default useFetchData;

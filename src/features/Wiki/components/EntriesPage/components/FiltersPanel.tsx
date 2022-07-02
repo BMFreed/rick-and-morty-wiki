@@ -1,6 +1,5 @@
 import { FC, useState } from 'react';
-
-import { TFilter } from '../../../utils/categories';
+import { TFilter } from '@Wiki/utils/categories';
 
 interface IProps {
   filters: TFilter[];

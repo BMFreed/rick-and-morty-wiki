@@ -6,7 +6,7 @@ interface IProps {
   pagesPerView: number;
 }
 
-const usePagination = ({
+export const usePagination = ({
   numberOfPages,
   pagesPerView,
 }: IProps): {
@@ -40,5 +40,3 @@ const usePagination = ({
     currentSetOfPages,
   };
 };
-
-export default usePagination;

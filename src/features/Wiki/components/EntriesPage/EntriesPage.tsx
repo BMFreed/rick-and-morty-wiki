@@ -1,10 +1,9 @@
 import { DispatchWithoutAction, FC, useState } from 'react';
-
-import { IEntriesPageData, TEntry } from '../../types/entriesPageData';
-import { ICategory } from '../../utils/categories';
-import { DetailedEntryPopup } from '../DetailedEntryPopup';
-import { FiltersPanel } from './components/FiltersPanel';
-import { PageButtons } from './components/PageButtons';
+import { IEntriesPageData, TEntry } from '@Wiki/types/entriesPageData';
+import { ICategory } from '@Wiki/utils/categories';
+import { DetailedEntryPopup } from '@Wiki/components/DetailedEntryPopup';
+import { FiltersPanel } from '@Wiki/components/EntriesPage/components/FiltersPanel';
+import { PageButtons } from '@Wiki/components/EntriesPage/components/PageButtons';
 
 interface IProps {
   category: ICategory;
