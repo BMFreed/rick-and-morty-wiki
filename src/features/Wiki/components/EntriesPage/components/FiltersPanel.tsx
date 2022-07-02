@@ -19,6 +19,7 @@ export const FiltersPanel: FC<IProps> = ({ filters, onApplyFilters }) => {
 
   return (
     <aside>
+      <h2>Filters:</h2>
       {filters.map((filter) => {
         if ('conditions' in filter) {
           return (

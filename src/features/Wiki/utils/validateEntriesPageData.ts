@@ -1,7 +1,14 @@
-export const validateEntriesPageData = (data: unknown): boolean =>
-  typeof data === 'object' &&
-  data !== null &&
-  'info' in data &&
-  typeof (data as Record<string, object>).info === 'object' &&
-  'results' in data &&
-  typeof (data as Record<string, object>).results === 'object';
+import { IEntriesPageData } from '@Wiki/types/entriesPageData';
+
+export const validateEntriesPageData = (data: unknown): boolean => {
+  const responseWithEntries = data as IEntriesPageData;
+
+  return (
+    typeof responseWithEntries === 'object' &&
+    data !== null &&
+    'info' in responseWithEntries &&
+    typeof responseWithEntries.info === 'object' &&
+    'results' in responseWithEntries &&
+    typeof responseWithEntries.results === 'object'
+  );
+};

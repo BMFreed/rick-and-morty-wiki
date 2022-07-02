@@ -1,3 +1,4 @@
+import { IEntriesPageData } from '@features/Wiki/types/entriesPageData';
 import { useState } from 'react';
 
 export const useFetchData = <Data>(
@@ -20,12 +21,14 @@ export const useFetchData = <Data>(
     try {
       const apiResponse = await fetch(url);
 
-      const parsedData = await apiResponse.json();
+      const parsedData = (await apiResponse.json()) as
+        | IEntriesPageData
+        | { error: string };
 
       if (isResponseValid(parsedData)) {
         setData(parsedData);
-      } else {
-        setFetchError('The server returned an invalid response.');
+      } else if ('error' in parsedData) {
+        setFetchError(parsedData.error);
       }
     } catch {
       setFetchError('Problem fetching data. Please try again later.');

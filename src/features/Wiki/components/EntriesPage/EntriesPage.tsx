@@ -32,7 +32,7 @@ export const EntriesPage: FC<IProps> = ({
     <>
       {showOverlay && <div>{fetchError || 'Loading...'}</div>}
       <header>
-        <button onClick={closePage}>Назад</button>
+        <button onClick={closePage}>Go back</button>
       </header>
       <FiltersPanel
         filters={category.filters}
