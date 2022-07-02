@@ -33,7 +33,12 @@ const useFetchData = <Data>(
     setIsLoading(false);
   };
 
-  return { data, loadData, isLoading, fetchError };
+  return {
+    data,
+    loadData,
+    isLoading,
+    fetchError,
+  };
 };
 
 export default useFetchData;

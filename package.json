@@ -1,59 +1,61 @@
 {
   "name": "rick-and-morty-wiki",
   "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.16.4",
+  "scripts": {
+    "build": "npm run clean-dist && webpack --config=configs/webpack/prod.js",
+    "clean-dist": "rimraf dist/*",
+    "lint": "tsc && eslint './src/**/*.{js,ts,tsx}' --quiet",
+    "start": "npm run start-dev",
+    "start-dev": "webpack serve --config=configs/webpack/dev.js",
+    "start-prod": "npm run build && node express.js",
+    "test": "jest --coverage --watchAll --config=configs/jest.json"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.5",
+    "@babel/preset-env": "^7.18.2",
+    "@babel/preset-react": "^7.17.12",
+    "@babel/preset-typescript": "^7.17.12",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
     "@testing-library/react": "^13.3.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/lodash": "^4.14.182",
-    "@types/node": "^16.11.41",
+    "@types/jest": "^28.1.2",
+    "@types/node": "^18.0.0",
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.5",
+    "@typescript-eslint/eslint-plugin": "^5.28.0",
+    "@typescript-eslint/parser": "^5.28.0",
+    "@types/lodash": "^4.14.182",
     "@types/styled-components": "^5.1.25",
-    "eslint-config-airbnb-typescript": "^17.0.0",
+    "babel-loader": "^8.2.5",
+    "eslint": "^8.18.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "lodash": "^4.17.21",
+    "eslint-plugin-react": "^7.30.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "express": "^4.18.1",
+    "file-loader": "^6.2.0",
+    "fork-ts-checker-webpack-plugin": "^7.2.11",
+    "html-webpack-plugin": "^5.5.0",
+    "image-webpack-loader": "^8.1.0",
+    "jest": "^28.1.1",
+    "jest-environment-jsdom": "^28.1.1",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "styled-components": "^5.3.5",
-    "styled-normalize": "^8.0.7",
+    "react-refresh": "^0.14.0",
+    "rimraf": "^3.0.2",
     "typescript": "^4.7.4",
-    "web-vitals": "^2.1.4"
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.9.2",
+    "webpack-merge": "^5.8.0",
+    "lodash": "^4.17.21",
+    "styled-components": "^5.3.5",
+    "styled-normalize": "^8.0.7"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
-    "codestyle-fix": "eslint \"./**/*.{ts,tsx,mdx,js}\" --fix",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.29.0",
-    "@typescript-eslint/parser": "^5.29.0",
-    "eslint": "^8.18.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-react": "^7.30.0",
-    "eslint-plugin-react-hooks": "^4.6.0"
-  }
+  "dependencies": {}
 }

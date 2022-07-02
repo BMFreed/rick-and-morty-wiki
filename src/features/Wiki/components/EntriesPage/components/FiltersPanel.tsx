@@ -20,30 +20,34 @@ export const FiltersPanel: FC<IProps> = ({ filters, onApplyFilters }) => {
 
   return (
     <aside>
-      {filters.map((filter) =>
-        'conditions' in filter ? (
-          <article key={filter.name}>
-            <label htmlFor={`filter-${filter.name}`}>{filter.name}</label>{' '}
-            <select
-              name={`filter-${filter.name}`}
-              id={filter.name}
-              onChange={(event) => {
-                const currentValue = event.target.value;
+      {filters.map((filter) => {
+        if ('conditions' in filter) {
+          return (
+            <article key={filter.name}>
+              <label htmlFor={`filter-${filter.name}`}>{filter.name}</label>{' '}
+              <select
+                name={`filter-${filter.name}`}
+                id={filter.name}
+                onChange={(event) => {
+                  const currentValue = event.target.value;
 
-                const condition = currentValue === 'all' ? '' : currentValue;
+                  const condition = currentValue === 'all' ? '' : currentValue;
 
-                onFiltersChange(filter.name, condition);
-              }}
-            >
-              <option>all</option>
-              {filter.conditions.map((condition) => (
-                <option key={condition} value={condition}>
-                  {condition}
-                </option>
-              ))}
-            </select>
-          </article>
-        ) : (
+                  onFiltersChange(filter.name, condition);
+                }}
+              >
+                <option>all</option>
+                {filter.conditions.map((condition) => (
+                  <option key={condition} value={condition}>
+                    {condition}
+                  </option>
+                ))}
+              </select>
+            </article>
+          );
+        }
+
+        return (
           <article key={filter.name}>
             <label htmlFor={`filter-${filter.name}`}>{filter.name}</label>{' '}
             <input
@@ -57,8 +61,8 @@ export const FiltersPanel: FC<IProps> = ({ filters, onApplyFilters }) => {
               }
             />
           </article>
-        ),
-      )}
+        );
+      })}
       <button onClick={() => onApplyFilters(activeFilters)}>
         Apply filters
       </button>

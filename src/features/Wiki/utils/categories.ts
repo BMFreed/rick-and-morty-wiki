@@ -1,5 +1,5 @@
-import charactersThumbnail from '../images/characters.webp';
-import locationsThumbnail from '../images/locations.webp';
+import charactersThumbnail from '../images/characters.jpg';
+import locationsThumbnail from '../images/locations.jpg';
 import episodesThumbnail from '../images/episodes.jpg';
 
 export enum CategoryName {
