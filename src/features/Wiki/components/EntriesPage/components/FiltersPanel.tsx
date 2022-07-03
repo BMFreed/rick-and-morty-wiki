@@ -1,5 +1,8 @@
 import { FC, useState } from 'react';
 import { TFilter } from '@Wiki/utils/categories';
+import styled from 'styled-components';
+import { Filter } from '@Wiki/components/EntriesPage/components/Filter';
+import { SButton } from '@features/Wiki/ui';
 
 interface IProps {
   filters: TFilter[];
@@ -18,54 +21,47 @@ export const FiltersPanel: FC<IProps> = ({ filters, onApplyFilters }) => {
     }));
 
   return (
-    <aside>
-      <h2>Filters:</h2>
-      {filters.map((filter) => {
-        if ('conditions' in filter) {
-          return (
-            <article key={filter.name}>
-              <label htmlFor={`filter-${filter.name}`}>{filter.name}</label>{' '}
-              <select
-                name={`filter-${filter.name}`}
-                id={filter.name}
-                onChange={(event) => {
-                  const currentValue = event.target.value;
-
-                  const condition = currentValue === 'all' ? '' : currentValue;
-
-                  onFiltersChange(filter.name, condition);
-                }}
-              >
-                <option>all</option>
-                {filter.conditions.map((condition) => (
-                  <option key={condition} value={condition}>
-                    {condition}
-                  </option>
-                ))}
-              </select>
-            </article>
-          );
-        }
-
-        return (
-          <article key={filter.name}>
-            <label htmlFor={`filter-${filter.name}`}>{filter.name}</label>{' '}
-            <input
-              type='text'
-              id={`filter-${filter.name}`}
-              onChange={(event) =>
-                onFiltersChange(
-                  filter.name,
-                  event.target.value.trim().toLowerCase(),
-                )
-              }
-            />
-          </article>
-        );
-      })}
-      <button onClick={() => onApplyFilters(activeFilters)}>
+    <SWrapper>
+      <SFiltersHeading>Filters:</SFiltersHeading>
+      <SFiltersList>
+        {filters.map((filter) => (
+          <SFilterWrapper key={filter.name}>
+            <SFilterTitle htmlFor={filter.name}>{filter.name}</SFilterTitle>
+            <Filter filter={filter} onFiltersChange={onFiltersChange} />
+          </SFilterWrapper>
+        ))}
+      </SFiltersList>
+      <SButton onClick={() => onApplyFilters(activeFilters)}>
         Apply filters
-      </button>
-    </aside>
+      </SButton>
+    </SWrapper>
   );
 };
+
+const SWrapper = styled.aside`
+  margin-left: 20px;
+`;
+
+const SFiltersHeading = styled.h2`
+  margin-bottom: 20px;
+`;
+
+const SFiltersList = styled.ul`
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  list-style: none;
+  margin-bottom: 20px;
+`;
+
+const SFilterWrapper = styled.li`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+`;
+
+const SFilterTitle = styled.label`
+  text-transform: capitalize;
+  font-weight: bold;
+`;

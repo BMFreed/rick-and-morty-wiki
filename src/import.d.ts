@@ -4,4 +4,6 @@ declare module '*.jpg' {
   export default value;
 }
 
+declare module '*.svg';
+
 declare module '*.woff2';

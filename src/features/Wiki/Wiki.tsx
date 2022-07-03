@@ -26,7 +26,9 @@ export const Wiki: FC = () => {
           isLoading={isLoading}
           fetchError={fetchError}
           onPageChange={onPageChange}
-          closePage={() => setCategory(undefined)}
+          closePage={() => {
+            setCategory(undefined);
+          }}
           onApplyFilters={onApplyFilters}
         />
       ) : (

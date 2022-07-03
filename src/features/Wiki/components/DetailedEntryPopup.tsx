@@ -7,6 +7,8 @@ import {
   ILocationEntry,
   TEntry,
 } from '@Wiki/types/entriesPageData';
+import { SButton } from '@Wiki/ui';
+import CloseIcon from '@common/icons/close.svg';
 
 interface IProps {
   categoryName: CategoryName;
@@ -14,88 +16,22 @@ interface IProps {
   onClose: DispatchWithoutAction;
 }
 
-const CharacterPopup: FC<{ data: ICharacterEntry }> = ({ data }) => {
-  const { image, name, species, status, type, gender, origin, location } = data;
-
-  return (
+export const DetailedEntryPopup: FC<IProps> = ({
+  categoryName,
+  data,
+  onClose,
+}) => (
+  <SPopupOverlay>
     <SPopupWrapper>
-      <img src={image} />
-      <h2>{name}</h2>
-      <ul>
-        <li>
-          <div>Species:</div>
-          <div>{species}</div>
-        </li>
-        {type && (
-          <li>
-            <div>Type:</div>
-            <div>{type}</div>
-          </li>
-        )}
-        <li>
-          <div>Gender:</div>
-          <div>{gender}</div>
-        </li>
-        <li>
-          <div>Status:</div>
-          <div>{status}</div>
-        </li>
-        <li>
-          <div>Original location:</div>
-          <div>{origin.name}</div>
-        </li>
-        <li>
-          <div>Last known location:</div>
-          <div>{location.name}</div>
-        </li>
-      </ul>
+      <SCloseButton onClick={onClose}>
+        <SCloseIcon />
+      </SCloseButton>
+      <PopupContent categoryName={categoryName} data={data} />
     </SPopupWrapper>
-  );
-};
+  </SPopupOverlay>
+);
 
-const LocationPopup: FC<{ data: ILocationEntry }> = ({ data }) => {
-  const { name, type, dimension } = data;
-
-  return (
-    <SPopupWrapper>
-      <h2>{name}</h2>
-      <ul>
-        {type && (
-          <li>
-            <div>Type:</div>
-            <div>{type}</div>
-          </li>
-        )}
-        <li>
-          <div>Dimension:</div>
-          <div>{dimension}</div>
-        </li>
-      </ul>
-    </SPopupWrapper>
-  );
-};
-
-const EpisodePopup: FC<{ data: IEpisodeEntry }> = ({ data }) => {
-  const { name, air_date: airDate, episode } = data;
-
-  return (
-    <SPopupWrapper>
-      <h2>{name}</h2>
-      <ul>
-        <li>
-          <div>Aired on:</div>
-          <div>{airDate}</div>
-        </li>
-        <li>
-          <div>Episode code:</div>
-          <div>{episode}</div>
-        </li>
-      </ul>
-    </SPopupWrapper>
-  );
-};
-
-export const DetailedEntryPopup: FC<IProps> = ({ categoryName, data }) => {
+const PopupContent: FC<Omit<IProps, 'onClose'>> = ({ categoryName, data }) => {
   switch (categoryName) {
     case CategoryName.CHARACTERS:
       return <CharacterPopup data={data as ICharacterEntry} />;
@@ -108,7 +44,139 @@ export const DetailedEntryPopup: FC<IProps> = ({ categoryName, data }) => {
   }
 };
 
+const CharacterPopup: FC<{ data: ICharacterEntry }> = ({ data }) => {
+  const { image, name, species, status, type, gender, origin, location } = data;
+
+  return (
+    <>
+      <SImage src={image} />
+      <SEntryHeading>{name}</SEntryHeading>
+      <SList>
+        <SEntryItem>
+          <SEntryItemTitle>Species:</SEntryItemTitle>
+          <div>{species}</div>
+        </SEntryItem>
+        {type && (
+          <SEntryItem>
+            <SEntryItemTitle>Type:</SEntryItemTitle>
+            <div>{type}</div>
+          </SEntryItem>
+        )}
+        <SEntryItem>
+          <SEntryItemTitle>Gender:</SEntryItemTitle>
+          <div>{gender}</div>
+        </SEntryItem>
+        <SEntryItem>
+          <SEntryItemTitle>Status:</SEntryItemTitle>
+          <div>{status}</div>
+        </SEntryItem>
+        <SEntryItem>
+          <SEntryItemTitle>Original location:</SEntryItemTitle>
+          <div>{origin.name}</div>
+        </SEntryItem>
+        <SEntryItem>
+          <SEntryItemTitle>Last known location:</SEntryItemTitle>
+          <div>{location.name}</div>
+        </SEntryItem>
+      </SList>
+    </>
+  );
+};
+
+const LocationPopup: FC<{ data: ILocationEntry }> = ({ data }) => {
+  const { name, type, dimension } = data;
+
+  return (
+    <>
+      <SEntryHeading>{name}</SEntryHeading>
+      <SList>
+        {type && (
+          <SEntryItem>
+            <div>Type:</div>
+            <div>{type}</div>
+          </SEntryItem>
+        )}
+        <SEntryItem>
+          <SEntryItemTitle>Dimension:</SEntryItemTitle>
+          <div>{dimension}</div>
+        </SEntryItem>
+      </SList>
+    </>
+  );
+};
+
+const EpisodePopup: FC<{ data: IEpisodeEntry }> = ({ data }) => {
+  const { name, air_date: airDate, episode } = data;
+
+  return (
+    <>
+      <SEntryHeading>{name}</SEntryHeading>
+      <SList>
+        <SEntryItem>
+          <SEntryItemTitle>Aired on:</SEntryItemTitle>
+          <div>{airDate}</div>
+        </SEntryItem>
+        <SEntryItem>
+          <SEntryItemTitle>Episode code:</SEntryItemTitle>
+          <div>{episode}</div>
+        </SEntryItem>
+      </SList>
+    </>
+  );
+};
+
 const SPopupWrapper = styled.section`
+  background-color: ${({ theme }) => theme.colors.background};
+  padding: 36px;
+  border-radius: 4px;
+  position: relative;
+`;
+
+const SPopupOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(66 66 66 / 50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const SCloseButton = styled(SButton)`
   position: absolute;
-  background-color: white;
+  top: 10px;
+  right: 10px;
+  border: none;
+  padding: 0;
+`;
+
+const SCloseIcon = styled(CloseIcon)`
+  fill: ${({ theme }) => theme.colors.text};
+`;
+
+const SImage = styled.img`
+  border-radius: 6px;
+  margin-bottom: 20px;
+`;
+
+const SList = styled.ul`
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+const SEntryHeading = styled.h2`
+  margin-bottom: 16px;
+`;
+
+const SEntryItem = styled.li`
+  display: flex;
+  gap: 8px;
+`;
+
+const SEntryItemTitle = styled.div`
+  font-weight: bold;
 `;

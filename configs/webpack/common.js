@@ -18,8 +18,13 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.(jpe?g|png|gif|svg)$/i,
+        test: /\.(jpe?g|png|gif)$/i,
         type: 'asset/resource',
+      },
+      {
+        test: /\.svg$/i,
+        issuer: /\.tsx?$/,
+        use: ['@svgr/webpack'],
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/i,

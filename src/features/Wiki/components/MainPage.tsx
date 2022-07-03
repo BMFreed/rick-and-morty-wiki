@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { ICategory } from '@Wiki/utils/categories';
 import styled, { css } from 'styled-components';
+import { SPageWrapper, SHeading } from '@Wiki/ui';
 
 interface IProps {
   categories: ICategory[];
@@ -8,7 +9,7 @@ interface IProps {
 }
 
 export const MainPage: FC<IProps> = ({ categories, onCategoryClick }) => (
-  <SWrapper>
+  <SPageWrapper>
     <SHeading>Choose category:</SHeading>
     <SCategoriesWrapper>
       {categories.map((category) => (
@@ -21,24 +22,8 @@ export const MainPage: FC<IProps> = ({ categories, onCategoryClick }) => (
         </SCategory>
       ))}
     </SCategoriesWrapper>
-  </SWrapper>
+  </SPageWrapper>
 );
-
-const SWrapper = styled.section`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding-top: 60px;
-`;
-
-const SHeading = styled.h1`
-  ${({ theme }) => css`
-    ${theme.fonts.heading.main};
-    color: ${theme.colors.accent};
-  `}
-  margin-bottom: 40px;
-`;
 
 const SCategoriesWrapper = styled.main`
   display: grid;

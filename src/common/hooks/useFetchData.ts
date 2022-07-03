@@ -27,6 +27,7 @@ export const useFetchData = <Data>(
 
       if (isResponseValid(parsedData)) {
         setData(parsedData);
+        setFetchError(undefined);
       } else if ('error' in parsedData) {
         setFetchError(parsedData.error);
       }
