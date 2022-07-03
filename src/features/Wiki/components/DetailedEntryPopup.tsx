@@ -9,6 +9,7 @@ import {
 } from '@Wiki/types/entriesPageData';
 import { SButton } from '@Wiki/ui';
 import CloseIcon from '@common/icons/close.svg';
+import { useClickAway } from '@common/hooks/useClickAway';
 
 interface IProps {
   categoryName: CategoryName;
@@ -20,16 +21,22 @@ export const DetailedEntryPopup: FC<IProps> = ({
   categoryName,
   data,
   onClose,
-}) => (
-  <SPopupOverlay>
-    <SPopupWrapper>
-      <SCloseButton onClick={onClose}>
-        <SCloseIcon />
-      </SCloseButton>
-      <PopupContent categoryName={categoryName} data={data} />
-    </SPopupWrapper>
-  </SPopupOverlay>
-);
+}) => {
+  const { contentRef, onClickWithClickAway } = useClickAway({
+    onClickAway: onClose,
+  });
+
+  return (
+    <SPopupOverlay onClick={onClickWithClickAway}>
+      <SPopupWrapper ref={contentRef}>
+        <SCloseButton onClick={onClose}>
+          <SCloseIcon />
+        </SCloseButton>
+        <PopupContent categoryName={categoryName} data={data} />
+      </SPopupWrapper>
+    </SPopupOverlay>
+  );
+};
 
 const PopupContent: FC<Omit<IProps, 'onClose'>> = ({ categoryName, data }) => {
   switch (categoryName) {
