@@ -87,7 +87,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['configs/**/*.js'],
+      files: ['configs/**/*.js', 'express.js'],
       rules: {
         '@typescript-eslint/no-var-requires': 'off',
       },
