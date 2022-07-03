@@ -4,7 +4,7 @@
   "homepage": "https://bmfreed.github.io/rick-and-morty-wiki",
   "scripts": {
     "build": "npm run clean-dist && webpack --config=configs/webpack/prod.js",
-    "clean-build": "rimraf build/*",
+    "clean-dist": "rimraf build/*",
     "lint": "tsc && eslint './src/**/*.{js,ts,tsx}' --quiet",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
