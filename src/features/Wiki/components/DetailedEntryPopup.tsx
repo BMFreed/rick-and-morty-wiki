@@ -130,6 +130,9 @@ const SPopupWrapper = styled.section`
   padding: 36px;
   border-radius: 4px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const SPopupOverlay = styled.div`

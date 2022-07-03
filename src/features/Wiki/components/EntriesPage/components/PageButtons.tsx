@@ -23,19 +23,24 @@ export const PageButtons: FC<IProps> = ({
   } = usePagination({ numberOfPages, pagesPerView });
 
   return (
-    <SButtonsWrapper>
-      {isFirstSetOfPages && (
-        <SPageButton onClick={goToPreviousSetOfPages}>...</SPageButton>
-      )}
-      {currentSetOfPages.map((pageNumber) => (
-        <SPageButton key={pageNumber} onClick={() => onPageChange(pageNumber)}>
-          {pageNumber}
-        </SPageButton>
-      ))}
-      {isLastSetOfPages && (
-        <SPageButton onClick={goToNextSetOfPages}>...</SPageButton>
-      )}
-    </SButtonsWrapper>
+    numberOfPages > 1 && (
+      <SButtonsWrapper>
+        {isFirstSetOfPages && (
+          <SPageButton onClick={goToPreviousSetOfPages}>...</SPageButton>
+        )}
+        {currentSetOfPages.map((pageNumber) => (
+          <SPageButton
+            key={pageNumber}
+            onClick={() => onPageChange(pageNumber)}
+          >
+            {pageNumber}
+          </SPageButton>
+        ))}
+        {isLastSetOfPages && (
+          <SPageButton onClick={goToNextSetOfPages}>...</SPageButton>
+        )}
+      </SButtonsWrapper>
+    )
   );
 };
 

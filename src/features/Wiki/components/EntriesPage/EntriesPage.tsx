@@ -7,6 +7,7 @@ import { FiltersPanel } from '@Wiki/components/EntriesPage/components/FiltersPan
 import { PageButtons } from '@Wiki/components/EntriesPage/components/PageButtons';
 import { SPageWrapper, SHeading, SButton } from '@Wiki/ui';
 import BackIcon from '@common/icons/back.svg';
+import fallbackImage from '@Wiki/images/fallback.jpg';
 
 interface IProps {
   category: ICategory;
@@ -27,13 +28,16 @@ export const EntriesPage: FC<IProps> = ({
   closePage,
   onApplyFilters,
 }) => {
+  if (!data) {
+    return <SLoadingOverlay>{fetchError || 'Loading...'}</SLoadingOverlay>;
+  }
+
   const [popupData, setPopupData] = useState<TEntry>();
 
-  const showOverlay = isLoading || fetchError;
+  const { results: entries, info: pageInfo } = data;
 
   return (
     <SPageWrapper>
-      {showOverlay && <div>{fetchError || 'Loading...'}</div>}
       <header>
         <SBackButton onClick={closePage}>
           <SBackIcon />
@@ -48,18 +52,25 @@ export const EntriesPage: FC<IProps> = ({
             onApplyFilters={onApplyFilters}
           />
           <SEntriesWrapper>
-            {data?.results.map((entry) => (
-              <li key={entry.id}>
-                <SEntry onClick={() => setPopupData(entry)}>
-                  {'image' in entry && <img src={entry.image} />}
-                  <SEntryCaption>{entry.name}</SEntryCaption>
-                </SEntry>
-              </li>
-            ))}
+            {isLoading && <SLoadingOverlay>{'Loading...'}</SLoadingOverlay>}
+            {fetchError ? (
+              <SErrorMessage>{fetchError}</SErrorMessage>
+            ) : (
+              entries.map((entry) => (
+                <li key={entry.id}>
+                  <SEntry onClick={() => setPopupData(entry)}>
+                    <img
+                      src={('image' in entry && entry.image) || fallbackImage}
+                    />
+                    <SEntryCaption>{entry.name}</SEntryCaption>
+                  </SEntry>
+                </li>
+              ))
+            )}
           </SEntriesWrapper>
         </SMainContent>
         <PageButtons
-          numberOfPages={data?.info.pages || 0}
+          numberOfPages={pageInfo.pages || 0}
           pagesPerView={5}
           onPageChange={onPageChange}
         />
@@ -97,6 +108,8 @@ const SBackIcon = styled(BackIcon)`
 `;
 
 const SEntriesWrapper = styled.ul`
+  position: relative;
+  width: 100%;
   list-style: none;
   display: flex;
   flex-wrap: wrap;
@@ -126,4 +139,29 @@ const SEntryCaption = styled.figcaption`
   padding: 8px 20px;
   border-radius: 6px;
   max-width: 90%;
+`;
+
+const SLoadingOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 60px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  padding-top: 40px;
+  background-color: rgb(66 66 66 / 50%);
+  z-index: 1;
+`;
+
+const SErrorMessage = styled.div`
+  font-size: 30px;
+  font-weight: bold;
+  width: 100%;
+  margin-right: 315px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
