@@ -45,6 +45,8 @@ export const useApi = (): {
 
     const url = new URL(queryUrl);
 
+    url.searchParams.delete('page');
+
     Object.entries(filters).forEach(([filterName, filterCondition]) => {
       url.searchParams.delete(filterName);
       if (filterCondition) {
