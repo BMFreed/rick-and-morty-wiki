@@ -70,7 +70,7 @@ export const EntriesPage: FC<IProps> = ({
           </SEntriesWrapper>
         </SMainContent>
         <PageButtons
-          numberOfPages={pageInfo.pages || 0}
+          numberOfPages={fetchError ? 0 : pageInfo.pages}
           pagesPerView={5}
           onPageChange={onPageChange}
         />

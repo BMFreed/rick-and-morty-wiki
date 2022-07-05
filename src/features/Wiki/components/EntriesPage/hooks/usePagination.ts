@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { range } from 'lodash';
 
 interface IProps {
@@ -17,6 +17,10 @@ export const usePagination = ({
   currentSetOfPages: number[];
 } => {
   const [firstPageInRange, setFirstPageInRange] = useState(1);
+
+  useEffect(() => {
+    setFirstPageInRange(1);
+  }, [numberOfPages]);
 
   const assumedLastPage = firstPageInRange + (pagesPerView - 1);
   const lastPageInRange =
